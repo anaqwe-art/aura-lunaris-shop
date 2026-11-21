@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA LUNARIS 時曜 | 官方香氛旗艦店</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+TC:wght@400;600;700&display=swap');
+
+        .font-serif-tc {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        .font-serif-en {
+            font-family: 'Cormorant Garamond', serif;
+        }
+    </style>
+</head>
+<body class="bg-[#070909] text-[#e8e4dc] flex flex-col min-h-screen selection:bg-[#c8a45d] selection:text-black">
+
+    <!-- 頂部極簡導覽列 -->
+    <header class="bg-[#070909]/90 backdrop-blur-md border-b border-[#c8a45d]/25 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleSidebar()" class="text-[#c8a45d] hover:text-white p-2 text-lg transition" title="開啟選單">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="/" class="flex items-baseline space-x-2.5">
+                    <span class="text-xl md:text-2xl font-serif-en font-semibold tracking-[0.18em] text-[#e6c786]">AURA LUNARIS</span>
+                    <span class="text-base md:text-lg font-serif-tc tracking-[0.2em] text-[#e6c786]">時曜</span>
+                </a>
+            </div>
+
+            <nav id="topCategoryNav" class="hidden lg:flex items-center space-x-8"></nav>
+
+            <div class="flex items-center space-x-5 text-[#e6c786]">
+                <a href="#collectionSection" class="hover:text-white transition" title="探索香氛">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </a>
+                <button onclick="toggleCart()" class="relative hover:text-white transition" title="尋香購物袋">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2.5 bg-[#c8a45d] text-black text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                </button>
+                <button onclick="openMemberEntry()" class="flex items-center space-x-1.5 hover:text-white transition" title="會員專區">
+                    <i class="fa-regular fa-circle-user text-xl"></i>
+                    <span id="headerMemberText" class="hidden sm:inline text-xs tracking-widest text-[#e8e4dc]"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左側收縮目錄 -->
+    <div id="sidebarDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/75 backdrop-blur-sm" onclick="toggleSidebar()"></div>
+        <div class="fixed inset-y-0 left-0 max-w-full flex pr-10">
+            <div class="w-80 bg-[#0b0e0d] border-r border-[#c8a45d]/30 shadow-2xl flex flex-col justify-between">
+                <div class="overflow-y-auto">
+                    <div class="p-6 border-b border-[#c8a45d]/20 flex justify-between items-center">
+                        <span class="font-serif-en tracking-[0.2em] text-base text-[#e6c786]">AURA LUNARIS 時曜</span>
+                        <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                    </div>
+                    <div class="p-5 border-b border-white/10">
+                        <button onclick="toggleSidebar(); openMemberEntry();" class="w-full flex items-center justify-between p-3.5 bg-[#111615] border border-[#c8a45d]/35 rounded-lg hover:border-[#c8a45d] transition">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-regular fa-circle-user text-xl text-[#c8a45d]"></i>
+                                <div class="text-left">
+                                    <div id="sidebarMemberTitle" class="text-sm font-serif-tc font-semibold text-[#f4f1ea]">會員頁面</div>
+                                    <div id="sidebarMemberSub" class="text-[11px] text-[#c8a45d]/80">點此選擇登入或註冊</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-[#c8a45d]"></i>
+                        </button>
+                    </div>
+                    <div class="p-5 space-y-1 text-sm">
+                        <div class="text-[11px] text-[#c8a45d]/70 px-3 py-2 tracking-[0.2em] uppercase">Collections · 系列館藏</div>
+                        <div id="sidebarCategoryList" class="space-y-1"></div>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/10">
+                    <a href="/admin.html" class="block w-full text-center text-xs border border-[#c8a45d]/40 hover:bg-[#c8a45d] hover:text-black text-[#c8a45d] py-2.5 rounded tracking-widest transition">
+                        進入品牌管理後台
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主視覺區：AI 全景香氛背景 -->
+    <section class="relative min-h-[520px] lg:min-h-[620px] flex items-center overflow-hidden border-b border-[#c8a45d]/20 bg-cover bg-right lg:bg-center" style="background-image: linear-gradient(to right, rgba(7,9,9,0.95) 0%, rgba(7,9,9,0.7) 45%, rgba(7,9,9,0.15) 100%), url('/hero.jpg');">
+        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 1440 700" fill="none">
+            <circle cx="740" cy="350" r="260" stroke="#c8a45d" stroke-width="0.7" stroke-dasharray="4 6" />
+            <ellipse cx="740" cy="350" rx="460" ry="220" transform="rotate(-18 740 350)" stroke="#c8a45d" stroke-width="0.8" />
+            <ellipse cx="740" cy="350" rx="520" ry="180" transform="rotate(12 740 350)" stroke="#c8a45d" stroke-width="0.5" />
+        </svg>
+
+        <div class="max-w-7xl mx-auto px-6 py-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div class="lg:col-span-6 space-y-6">
+                <h1 class="text-2xl sm:text-3xl xl:text-[34px] font-serif-tc font-semibold text-[#e6c786] leading-[1.6] tracking-[0.12em]">
+                    星軌有跡，草木有靈，<br>尋找你靈魂的命定香氣。
+                </h1>
+                <p class="text-xs sm:text-sm font-serif-en text-gray-300/90 tracking-[0.08em] leading-relaxed">
+                    The stars leave trails, the earth has a soul.<br>
+                    Discover your destined scent.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3.5">
+                    <a href="#collectionSection" class="inline-flex items-center space-x-5 border border-[#c8a45d]/70 hover:border-[#e6c786] bg-black/40 hover:bg-[#c8a45d]/15 px-5 py-3 rounded transition group">
+                        <div class="text-left">
+                            <div class="text-sm font-serif-tc text-[#f4f1ea] tracking-[0.2em]">探索系列</div>
+                            <div class="text-[9px] text-[#c8a45d] tracking-[0.2em] uppercase">EXPLORE COLLECTION</div>
+                        </div>
+                        <span class="text-[#c8a45d] group-hover:translate-x-1.5 transition transform">⟶</span>
+                    </a>
+
+                    <button type="button" onclick="openScentQuiz()" class="inline-flex items-center space-x-4 bg-[#c8a45d] hover:bg-[#e6c786] text-black px-5 py-3 rounded shadow-[0_0_25px_rgba(200,164,93,0.35)] transition group">
+                        <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+                        <div class="text-left">
+                            <div class="text-sm font-serif-tc font-bold tracking-[0.15em]">命定尋香之旅</div>
+                            <div class="text-[9px] font-bold tracking-[0.18em] uppercase opacity-80">AI SCENT JOURNEY</div>
+                        </div>
+                    </button>
+                </div>
+                <div class="pt-8 hidden lg:flex items-center space-x-2 text-[10px] tracking-[0.25em] text-gray-400">
+                    <span>SCROLL</span>
+                    <i class="fa-solid fa-chevron-down text-[9px] text-[#c8a45d]"></i>
+                </div>
+            </div>
+            <div class="lg:col-span-6 min-h-[120px] lg:min-h-[300px]"></div>
+        </div>
+    </section>
+
+    <!-- 商品館藏展示區 -->
+    <main id="collectionSection" class="max-w-7xl mx-auto px-6 py-14 flex-grow w-full">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#c8a45d]/20 gap-4">
+            <div>
+                <div class="text-[10px] font-serif-en tracking-[0.3em] text-[#c8a45d] uppercase">THE COLLECTION</div>
+                <h2 id="currentCategoryTitle" class="text-2xl font-serif-tc font-semibold tracking-[0.15em] text-[#f4f1ea] mt-1">全部香氛館藏</h2>
+            </div>
+            <div id="categoryPills" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7"></div>
+    </main>
+
+    <!-- 品牌精品頁尾 (Footer) -->
+    <footer class="bg-[#050606] border-t border-[#c8a45d]/25 text-xs text-gray-400 mt-12">
+        <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-baseline space-x-2">
+                    <span class="text-lg font-serif-en font-semibold tracking-[0.18em] text-[#e6c786]">AURA LUNARIS</span>
+                    <span class="text-sm font-serif-tc tracking-[0.2em] text-[#e6c786]">時曜</span>
+                </div>
+                <p class="leading-relaxed text-gray-500">
+                    星軌有跡，草木有靈，尋找你靈魂的命定香氣。<br>
+                    以時間維度（星座／地支）與空間維度（森林／花果）交織的小眾沙龍香氛。
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-[#e6c786] font-serif-tc font-bold tracking-widest text-sm">顧客服務與品牌資訊</h4>
+                <ul class="space-y-2">
+                    <li><button type="button" onclick="openInfoModal('about')" class="hover:text-[#e6c786] transition">品牌理念故事 (About Us)</button></li>
+                    <li><button type="button" onclick="openInfoModal('shipping')" class="hover:text-[#e6c786] transition">購物與配送需知 (Shipping Info)</button></li>
+                    <li><button type="button" onclick="openInfoModal('return')" class="hover:text-[#e6c786] transition">鑑賞期與退換貨政策 (Return Policy)</button></li>
+                    <li><button type="button" onclick="openInfoModal('faq')" class="hover:text-[#e6c786] transition">常見問題 (FAQ)</button></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-[#e6c786] font-serif-tc font-bold tracking-widest text-sm">聯絡我們</h4>
+                <p>客服信箱：service@auralunaris.com</p>
+                <p>服務時間：週一至週五 10:00 - 18:00</p>
+                <p>官方社群：@auralunaris.tw</p>
+            </div>
+        </div>
+        <div class="border-t border-white/10 py-4 text-center text-[11px] text-gray-600 tracking-wider">
+            © 2026 AURA LUNARIS 時曜香氛. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- 資訊與客服條款彈窗 -->
+    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeInfoModal()"></div>
+        <div class="bg-[#0e1311] border border-[#c8a45d]/45 rounded-2xl shadow-2xl max-w-lg w-full p-6 relative z-10 text-[#e8e4dc] max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-white/10 mb-4">
+                <h3 id="infoModalTitle" class="text-lg font-serif-tc font-bold text-[#e6c786] tracking-wider"></h3>
+                <button onclick="closeInfoModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="infoModalBody" class="text-xs md:text-sm text-gray-300 leading-relaxed space-y-3 whitespace-pre-line"></div>
+        </div>
+    </div>
+
+    <!-- ✨ AURA LUNARIS 時曜｜AI 尋香之旅雙軌互動視窗 -->
+    <div id="scentQuizModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="closeScentQuiz()"></div>
+        <div class="bg-[#0e1311] border border-[#c8a45d]/50 rounded-2xl shadow-[0_0_50px_rgba(200,164,93,0.18)] max-w-xl w-full p-6 md:p-8 relative z-10 text-[#e8e4dc] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-white/10 mb-5">
+                <div>
+                    <div class="text-[10px] font-serif-en tracking-[0.3em] text-[#c8a45d] uppercase">AURA LUNARIS · DIGITAL PERFUMER</div>
+                    <h3 class="text-lg font-serif-tc font-bold text-[#e6c786] tracking-wider">時曜香殿｜靈魂尋香之旅</h3>
+                </div>
+                <button onclick="closeScentQuiz()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- 階段 0：歡迎與入口分流 -->
+            <div id="quizStepWelcome" class="space-y-5">
+                <p class="text-xs md:text-sm font-serif-tc text-gray-200 leading-relaxed bg-[#070909] p-4 rounded-xl border border-[#c8a45d]/20">
+                    「星軌有跡，草木有靈，尋找你靈魂的命定香氣。<br>歡迎來到 <span class="text-[#e6c786] font-bold">AURA LUNARIS 時曜香殿</span>，請選擇你的尋香方式：」
+                </p>
+                <div class="space-y-3">
+                    <button type="button" onclick="enterFlowA()" class="w-full text-left p-4 rounded-xl bg-[#070909] border border-[#c8a45d]/40 hover:border-[#c8a45d] hover:bg-[#c8a45d]/10 transition flex items-center justify-between group">
+                        <div class="pr-3">
+                            <div class="text-sm font-serif-tc font-bold text-[#e6c786] mb-1">選項 A｜【時辰星軌推算】</div>
+                            <p class="text-xs text-gray-400 leading-relaxed">輸入你的出生年月日，以誕生時刻的天體座標與地支五行，鎖定你的本命靈魂香。</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[#c8a45d] group-hover:translate-x-1 transition"></i>
+                    </button>
+
+                    <button type="button" onclick="enterFlowB()" class="w-full text-left p-4 rounded-xl bg-[#070909] border border-[#c8a45d]/40 hover:border-[#c8a45d] hover:bg-[#c8a45d]/10 transition flex items-center justify-between group">
+                        <div class="pr-3">
+                            <div class="text-sm font-serif-tc font-bold text-[#e6c786] mb-1">選項 B｜【靈魂直覺測驗】</div>
+                            <p class="text-xs text-gray-400 leading-relaxed">回答 5 個生活與感官直覺問題，由你的內在氣場判斷此刻最適合的命定香氣。</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[#c8a45d] group-hover:translate-x-1 transition"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 流程 A：出生年月日推算 -->
+            <div id="quizFlowA" class="hidden space-y-5">
+                <form onsubmit="calculateFlowA(event)" class="space-y-5 text-xs md:text-sm">
+                    <div>
+                        <label class="block text-[#e6c786] font-bold mb-1.5">1. 請輸入您的出生年月日（國曆）</label>
+                        <input type="date" id="flowABirthdate" required max="2026-12-31" min="1940-01-01" class="w-full bg-[#070909] border border-white/20 rounded-lg px-3.5 py-2.5 text-white focus:outline-none focus:border-[#c8a45d]">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-[#e6c786] font-bold">2. 請選擇此刻最渴望的能量狀態（空間疊香）</label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-[#070909] border border-white/15 hover:border-[#c8a45d] cursor-pointer">
+                            <input type="radio" name="flowAScene" value="wood" checked class="mt-1 accent-[#c8a45d]">
+                            <div><div class="font-bold text-white">A. 靜心定神（森林系列）</div><div class="text-xs text-gray-400">想沉澱思緒、尋求內在平靜與深邃專注感</div></div>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-[#070909] border border-white/15 hover:border-[#c8a45d] cursor-pointer">
+                            <input type="radio" name="flowAScene" value="fruit" class="mt-1 accent-[#c8a45d]">
+                            <div><div class="font-bold text-white">B. 鮮活破曉（果香系列）</div><div class="text-xs text-gray-400">想提振活力、展現自然朝氣與突破張力</div></div>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-[#070909] border border-white/15 hover:border-[#c8a45d] cursor-pointer">
+                            <input type="radio" name="flowAScene" value="flower" class="mt-1 accent-[#c8a45d]">
+                            <div><div class="font-bold text-white">C. 詩意綻放（花香系列）</div><div class="text-xs text-gray-400">想營造溫柔、空靈優雅或帶點野性的迷人氛圍</div></div>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-3 pt-1">
+                        <button type="button" onclick="resetToWelcome()" class="px-4 py-2.5 rounded-lg border border-white/20 text-xs text-gray-300 hover:text-white">← 返回選擇</button>
+                        <button type="submit" class="flex-1 bg-[#c8a45d] hover:bg-[#dab872] text-black py-2.5 rounded-lg font-bold tracking-widest transition">開啟星軌推算結果 ⟶</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 流程 B：5 題靈魂直覺測驗 -->
+            <div id="quizFlowB" class="hidden space-y-4">
+                <div>
+                    <div class="flex justify-between text-[11px] text-gray-400 mb-1.5">
+                        <span id="quizStepText">第 1 題 / 共 5 題</span>
+                        <span class="text-[#c8a45d]">內在氣場感應</span>
+                    </div>
+                    <div class="w-full bg-[#070909] h-1.5 rounded-full overflow-hidden border border-white/10">
+                        <div id="quizProgressBar" class="bg-[#c8a45d] h-full transition-all duration-300" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <h4 id="quizQuestionTitle" class="text-base font-serif-tc font-bold text-[#f4f1ea] leading-relaxed pt-1"></h4>
+                <div id="quizOptionsList" class="space-y-2.5 text-xs md:text-sm"></div>
+                <div class="pt-2">
+                    <button type="button" onclick="resetToWelcome()" class="text-xs text-gray-400 hover:text-white">← 返回尋香入口</button>
+                </div>
+            </div>
+
+            <!-- 階段 3：最終專屬尋香報告（推薦香款皆可直接點擊跳轉商品頁面） -->
+            <div id="quizResultBox" class="hidden space-y-4 text-xs">
+                <div class="text-center space-y-1.5 pb-3 border-b border-white/10">
+                    <div class="text-[10px] tracking-[0.3em] text-[#c8a45d] uppercase">YOUR AURA LUNARIS REPORT</div>
+                    <h4 id="quizResCoord" class="text-lg md:text-xl font-serif-tc font-bold text-[#f4f1ea] tracking-wider"></h4>
+                </div>
+
+                <!-- 2. 時間主香（雙軌命定：含直接跳轉商品頁按鈕） -->
+                <div class="p-4 rounded-xl bg-[#070909] border border-[#c8a45d]/35 space-y-3">
+                    <div class="text-[#e6c786] font-bold tracking-wider">🔮 【你的時間主香（雙軌命定）】</div>
+
+                    <div id="resZodiacCard" class="p-2.5 -mx-2 rounded-lg hover:bg-white/5 cursor-pointer transition group">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="text-white font-bold group-hover:text-[#e6c786] transition" id="resZodiacTitle"></div>
+                            <span class="text-[11px] bg-[#c8a45d]/15 border border-[#c8a45d]/40 text-[#e6c786] px-2.5 py-0.5 rounded whitespace-nowrap group-hover:bg-[#c8a45d] group-hover:text-black font-bold transition">前往商品頁 →</span>
+                        </div>
+                        <div class="text-[#c8a45d] text-[11px] mt-1" id="resZodiacNotes"></div>
+                        <p class="text-gray-400 mt-1 leading-relaxed" id="resZodiacDesc"></p>
+                    </div>
+
+                    <div id="resEasternCard" class="p-2.5 -mx-2 rounded-lg hover:bg-white/5 cursor-pointer transition group border-t border-white/10 pt-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="text-white font-bold group-hover:text-[#e6c786] transition" id="resEasternTitle"></div>
+                            <span class="text-[11px] bg-[#c8a45d]/15 border border-[#c8a45d]/40 text-[#e6c786] px-2.5 py-0.5 rounded whitespace-nowrap group-hover:bg-[#c8a45d] group-hover:text-black font-bold transition">前往商品頁 →</span>
+                        </div>
+                        <div class="text-[#c8a45d] text-[11px] mt-1" id="resEasternCraft"></div>
+                        <div class="text-gray-400 text-[11px] mt-0.5" id="resEasternNotes"></div>
+                    </div>
+                </div>
+
+                <!-- 3. 空間疊香（可直接點擊跳轉疊香商品頁） -->
+                <div id="resLayerCard" class="p-4 rounded-xl bg-[#111714] border border-[#c8a45d]/30 hover:border-[#c8a45d] cursor-pointer transition group space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="text-[#e6c786] font-bold tracking-wider">🌿 【你的空間疊香（The Signature Mix）】</div>
+                        <span class="text-[11px] bg-[#c8a45d]/15 border border-[#c8a45d]/40 text-[#e6c786] px-2.5 py-0.5 rounded whitespace-nowrap group-hover:bg-[#c8a45d] group-hover:text-black font-bold transition">查看疊香商品 →</span>
+                    </div>
+                    <div id="resFormula" class="text-white font-bold group-hover:text-[#e6c786] transition"></div>
+                    <p id="resChemistry" class="text-gray-300 leading-relaxed"></p>
+                </div>
+
+                <!-- 4. 用香儀式與選購引導 -->
+                <div class="p-3.5 rounded-xl bg-[#070909] border border-dashed border-[#c8a45d]/30 space-y-1.5 text-gray-400">
+                    <div class="text-[#e6c786] font-bold">✨ 【專屬用香儀式與典藏建議】</div>
+                    <p id="resRitual" class="leading-relaxed"></p>
+                    <p class="text-gray-300 pt-1">推薦選購：<span class="text-[#e6c786] font-bold">命運疊香雙瓶典藏禮盒（主香 ＋ 疊香）</span> 或 <span class="text-[#e6c786] font-bold">探索星匣 2ml 試香體驗組</span></p>
+                </div>
+
+                <div class="flex gap-3 pt-1">
+                    <button type="button" onclick="resetToWelcome()" class="px-4 py-3 rounded border border-white/20 hover:border-[#c8a45d] text-gray-300 transition">
+                        重新尋香
+                    </button>
+                    <button type="button" id="quizGoShopBtn" class="flex-1 bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded font-bold tracking-widest transition">
+                        直接前往主香商品頁面 ⟶
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10/10 規格 全屏香氛商品詳情頁 (PDP) -->
+    <div id="productDetailModal" class="fixed inset-0 z-50 bg-[#070908] overflow-y-auto hidden text-[#e8e4dc]">
+        <div class="sticky top-0 z-20 bg-[#070908]/95 backdrop-blur border-b border-[#c8a45d]/20 px-6 py-4">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <button onclick="closeProductDetail()" class="text-xs font-serif-tc text-[#e6c786] hover:text-white flex items-center gap-2 transition">
+                    <i class="fa-solid fa-arrow-left"></i> 返回香氛館藏目錄
+                </button>
+                <button onclick="closeProductDetail()" class="text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 py-8 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div class="flex flex-col items-center md:sticky md:top-24 w-full max-w-lg mx-auto space-y-3 h-fit">
+                <div class="w-full rounded-2xl overflow-hidden bg-[#0d1210] border border-[#c8a45d]/30 shadow-2xl flex items-center justify-center transition-all duration-300 min-h-[260px]">
+                    <img id="detailImg" src="" class="w-full h-auto max-h-[540px] object-contain transition-all duration-300">
+                </div>
+                <div id="detailThumbnails" class="flex gap-2.5 overflow-x-auto w-full py-1"></div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <div class="text-[10px] font-serif-en tracking-[0.3em] text-[#c8a45d] uppercase">AURA LUNARIS PARFUM</div>
+                    <div id="detailCategory" class="text-xs text-gray-400 mt-1"></div>
+                    <h2 id="detailName" class="text-2xl md:text-4xl font-serif-tc font-bold text-[#f4f1ea] mt-1.5 tracking-wider"></h2>
+                </div>
+
+                <div id="detailPrice" class="text-2xl font-bold text-[#e6c786]"></div>
+
+                <div>
+                    <div class="text-xs text-gray-400 mb-2">容量規格：</div>
+                    <div class="flex gap-2.5">
+                        <button type="button" onclick="selectDetailSize('30ml', this)" class="size-btn px-5 py-2 rounded border border-white/20 text-xs hover:border-[#c8a45d] transition">30ml</button>
+                        <button type="button" onclick="selectDetailSize('50ml', this)" class="size-btn px-5 py-2 rounded border border-[#c8a45d] text-[#e6c786] text-xs font-bold bg-[#c8a45d]/10 transition">50ml</button>
+                        <button type="button" onclick="selectDetailSize('100ml', this)" class="size-btn px-5 py-2 rounded border border-white/20 text-xs hover:border-[#c8a45d] transition">100ml</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <div class="flex items-center border border-white/20 rounded bg-[#0b0e0d]">
+                        <button type="button" onclick="changeDetailQty(-1)" class="px-4 py-2.5 text-gray-400 hover:text-white text-sm">-</button>
+                        <span id="detailQty" class="px-3 text-sm font-bold min-w-[32px] text-center">1</span>
+                        <button type="button" onclick="changeDetailQty(1)" class="px-4 py-2.5 text-gray-400 hover:text-white text-sm">+</button>
+                    </div>
+                    <button onclick="addDetailToCart()" class="flex-1 bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded text-xs font-bold tracking-widest transition">
+                        加入尋香袋
+                    </button>
+                </div>
+
+                <div class="pt-8 border-t border-white/10 space-y-4">
+                    <h4 class="text-base font-serif-tc font-bold text-[#f4f1ea] tracking-wider pb-2 border-b border-white/10 flex items-center justify-between">
+                        <span>商品介紹</span>
+                        <i class="fa-solid fa-angle-down text-xs text-[#c8a45d]"></i>
+                    </h4>
+                    <div id="detailDesc" class="text-xs md:text-sm text-gray-300 leading-relaxed whitespace-pre-line space-y-3"></div>
+
+                    <div class="p-4 rounded-lg bg-[#111714] border border-[#c8a45d]/20 text-xs text-gray-400 space-y-1.5 mt-6">
+                        <div class="text-[#e6c786] font-bold"><i class="fa-solid fa-sparkles mr-1.5"></i>時曜 · 命定疊香哲學</div>
+                        <p class="leading-relaxed">此款作為本命時間主香，推薦可與《森林系列 · 迷霧雨林》或《果香系列》疊香揉擦，交織出專屬空間維度的深邃氣場。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 尋香購物袋 -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/75 backdrop-blur-sm" onclick="toggleCart()"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-[#0b0e0d] border-l border-[#c8a45d]/30 shadow-2xl flex flex-col">
+                <div class="p-5 border-b border-white/10 flex justify-between items-center">
+                    <h3 class="text-base font-serif-tc font-semibold tracking-widest text-[#e6c786]">尋香購物袋</h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <div id="cartItems" class="p-5 flex-1 overflow-y-auto divide-y divide-white/10"></div>
+                <div class="p-5 border-t border-white/10 bg-[#070909] space-y-4">
+                    <div class="flex justify-between text-base font-bold">
+                        <span>典藏小計</span>
+                        <span id="cartTotal" class="text-[#e6c786]">NT$ 0</span>
+                    </div>
+                    <button onclick="handleBuyClick()" id="checkoutBtn" class="w-full bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded font-bold text-sm tracking-widest disabled:opacity-30 transition">
+                        前往結帳購買
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 會員登入 / 註冊視窗 -->
+    <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAuthModal()"></div>
+        <div class="bg-[#0e1311] border border-[#c8a45d]/45 rounded-xl shadow-2xl max-w-md w-full p-6 relative z-10 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <div>
+                    <h3 class="text-lg font-serif-tc font-bold text-[#e6c786] tracking-wider">AURA · 時曜會員通行</h3>
+                    <p class="text-[11px] text-gray-400">請選擇登入現有帳號或註冊新會員</p>
+                </div>
+                <button onclick="closeAuthModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="authNotice" class="hidden mt-3 p-2.5 bg-red-950/60 border border-red-500/50 text-red-300 text-xs font-semibold rounded text-center"></div>
+            <div class="grid grid-cols-2 gap-2 my-4 bg-[#070909] p-1 rounded-lg text-sm font-bold border border-white/10">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="py-2 rounded-md bg-[#c8a45d] text-black">我要登入</button>
+                <button id="tabRegBtn" onclick="switchAuthTab('register')" class="py-2 rounded-md text-gray-400 hover:text-white">我要註冊</button>
+            </div>
+            <form id="loginForm" onsubmit="submitMemberLogin(event)" class="space-y-4 text-sm">
+                <div><label class="block text-xs text-gray-400 mb-1">手機號碼</label><input type="tel" id="loginPhone" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="請輸入註冊的手機號碼"></div>
+                <div><label class="block text-xs text-gray-400 mb-1">會員密碼</label><input type="password" id="loginPass" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="請輸入密碼"></div>
+                <button type="submit" class="w-full bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded font-bold tracking-widest">登入會員</button>
+            </form>
+            <form id="registerForm" onsubmit="submitMemberRegister(event)" class="space-y-3 text-sm hidden">
+                <div><label class="block text-xs text-gray-400 mb-1">您的姓名</label><input type="text" id="regName" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="請輸入姓名"></div>
+                <div><label class="block text-xs text-gray-400 mb-1">手機號碼（作為登入帳號）</label><input type="tel" id="regPhone" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="例如：0912345678"></div>
+                <div><label class="block text-xs text-gray-400 mb-1">設定密碼</label><input type="password" id="regPass" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="請設定密碼"></div>
+                <div><label class="block text-xs text-gray-400 mb-1">預設收件地址</label><input type="text" id="regAddr" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="結帳時將自動帶入"></div>
+                <button type="submit" class="w-full bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded font-bold tracking-widest">完成註冊並登入</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 會員中心視窗 -->
+    <div id="memberCenterModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeMemberCenter()"></div>
+        <div class="bg-[#0e1311] border border-[#c8a45d]/45 rounded-xl shadow-2xl max-w-lg w-full p-6 relative z-10 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+                <div>
+                    <h3 class="text-lg font-serif-tc font-bold text-[#e6c786]">我的會員頁面</h3>
+                    <p id="memberProfileInfo" class="text-xs text-gray-400 mt-0.5"></p>
+                </div>
+                <button onclick="closeMemberCenter()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <h4 class="text-xs font-bold text-[#c8a45d] uppercase mb-2 tracking-widest">歷史訂單紀錄</h4>
+            <div id="memberOrdersList" class="space-y-2.5 max-h-72 overflow-y-auto text-xs mb-4"></div>
+            <div class="flex justify-between items-center pt-3 border-t border-white/10">
+                <button onclick="memberLogout()" class="text-xs text-red-400 hover:underline font-bold">登出會員帳號</button>
+                <button onclick="closeMemberCenter()" class="bg-[#c8a45d] text-black text-xs px-4 py-2 rounded font-bold">返回商店</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結帳視窗 -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeCheckout()"></div>
+        <div class="bg-[#0e1311] border border-[#c8a45d]/45 rounded-2xl shadow-2xl max-w-lg w-full p-6 relative z-10 text-[#e8e4dc] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-white/10 mb-4">
+                <h3 class="text-lg font-serif-tc font-bold text-[#e6c786] tracking-wider">確認配送與付款方式</h3>
+                <button onclick="closeCheckout()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form onsubmit="submitOrder(event)" class="space-y-4 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block text-gray-400 mb-1">收件人姓名</label><input type="text" id="custName" required class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white"></div>
+                    <div><label class="block text-gray-400 mb-1">聯絡電話</label><input type="tel" id="custPhone" required class="w-full bg-[#050606] border border-white/10 rounded px-3 py-2 text-gray-400" readonly></div>
+                </div>
+
+                <div>
+                    <label class="block text-[#e6c786] font-bold mb-2">① 取貨物流方式</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" onclick="selectShipping('7-11 超商取貨', this)" class="shipping-btn p-2.5 rounded border border-[#c8a45d] text-[#e6c786] font-bold bg-[#c8a45d]/10 text-center">7-11 超商</button>
+                        <button type="button" onclick="selectShipping('全家 超商取貨', this)" class="shipping-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-center">全家 超商</button>
+                        <button type="button" onclick="selectShipping('宅配到府', this)" class="shipping-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-center">宅配到府</button>
+                    </div>
+                </div>
+
+                <div id="storeInputBox" class="space-y-2">
+                    <label id="storeLabel" class="block text-gray-400">7-11 取件超商門市</label>
+
+                    <div id="noStoreSelected" class="p-3 border border-dashed border-[#c8a45d]/40 rounded bg-[#070909] flex flex-wrap gap-2 items-center justify-between">
+                        <span class="text-gray-400 text-xs"><i class="fa-solid fa-store mr-1 text-[#c8a45d]"></i>尚未選定門市</span>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="openStorePicker()" class="bg-[#008046] hover:bg-[#006837] text-white text-xs font-bold px-3.5 py-1.5 rounded transition">開啟超商電子地圖</button>
+                            <button type="button" onclick="openEcpayMap()" class="border border-white/20 hover:border-white text-gray-300 text-xs px-2.5 py-1.5 rounded transition" title="綠界測試通道">綠界通道</button>
+                        </div>
+                    </div>
+
+                    <div id="storeSelectedCard" class="hidden p-3 border border-[#c8a45d] rounded bg-[#0c120f] flex items-center justify-between">
+                        <div>
+                            <div id="selectedStoreName" class="font-bold text-[#e6c786] text-xs"></div>
+                            <div id="selectedStoreAddr" class="text-[11px] text-gray-400 mt-0.5"></div>
+                        </div>
+                        <button type="button" onclick="openStorePicker()" class="text-xs text-[#c8a45d] hover:underline whitespace-nowrap ml-2 font-bold">變更門市</button>
+                    </div>
+                    <input type="hidden" id="custStore" value="">
+                </div>
+
+                <div id="homeAddressBox" class="hidden">
+                    <label class="block text-gray-400 mb-1">宅配完整送達地址</label>
+                    <input type="text" id="custAddr" class="w-full bg-[#070909] border border-white/15 rounded px-3 py-2 text-white" placeholder="請輸入縣市、街道與門牌號碼">
+                </div>
+
+                <div class="pt-2 border-t border-white/10">
+                    <label class="block text-[#e6c786] font-bold mb-2">② 付款方式</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="selectPayment('貨到付款', this)" class="payment-btn p-2.5 rounded border border-[#c8a45d] text-[#e6c786] font-bold bg-[#c8a45d]/10 text-left flex items-center justify-between">
+                            <span>貨到付款</span><i class="fa-solid fa-box text-xs"></i>
+                        </button>
+                        <button type="button" onclick="selectPayment('綠界全方位付款 (信用卡/ATM/超商)', this)" class="payment-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-left flex items-center justify-between">
+                            <span>綠界線上刷卡 / 轉帳</span><i class="fa-regular fa-credit-card text-xs text-[#c8a45d]"></i>
+                        </button>
+                        <button type="button" onclick="selectPayment('LINE Pay', this)" class="payment-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-left flex items-center justify-between">
+                            <span>LINE Pay</span><i class="fa-brands fa-line text-[#06c755] text-sm"></i>
+                        </button>
+                        <button type="button" onclick="selectPayment('街口支付', this)" class="payment-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-left flex items-center justify-between">
+                            <span>街口支付 (JKOPAY)</span><span class="text-red-500 font-bold text-[10px]">街口</span>
+                        </button>
+                    </div>
+                    <p id="ecpayTip" class="hidden text-[11px] text-emerald-400 mt-2">
+                        ✨ 送出後將自動跳轉至綠界 ECPay 安全付款頁面（測試卡號：4311-9522-2222-2222，3D驗證碼：1234）
+                    </p>
+                </div>
+
+                <button type="submit" id="submitOrderBtn" class="w-full bg-[#c8a45d] hover:bg-[#dab872] text-black py-3 rounded font-bold text-sm tracking-widest transition mt-3">
+                    確認結帳送出
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 1:1 復刻 7-ELEVEN / 全家 官方電子地圖查詢系統 (E-Map) -->
+    <div id="storePickerModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-2 md:p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeStorePicker()"></div>
+        <div class="bg-white text-gray-800 rounded-lg shadow-2xl max-w-4xl w-full relative z-10 overflow-hidden max-h-[92vh] flex flex-col">
+            <div class="bg-white border-b-4 border-[#008046] px-5 pt-4 flex flex-wrap items-end justify-between gap-2">
+                <div class="flex items-center space-x-3 pb-3">
+                    <div id="emapBrandBadge" class="font-black text-xl tracking-tight text-[#008046]">7-ELEVEN</div>
+                    <div class="border-l pl-3 text-xs text-gray-500">
+                        <div class="font-bold text-gray-800">電子地圖查詢系統</div>
+                        <div>E - Map</div>
+                    </div>
+                </div>
+                <div class="flex items-end space-x-1 text-xs font-bold">
+                    <button type="button" onclick="switchEmapTab('street')" id="emapTabStreet" class="px-4 py-2.5 rounded-t border-t border-l border-r border-gray-300 bg-white text-[#008046] -mb-[4px] border-b-4 border-b-white">
+                        <i class="fa-solid fa-road mr-1"></i>街道名稱
+                    </button>
+                    <button type="button" onclick="switchEmapTab('name')" id="emapTabName" class="px-4 py-2.5 rounded-t bg-[#008046] text-white hover:bg-[#006837]">
+                        <i class="fa-solid fa-store mr-1"></i>門市名稱
+                    </button>
+                    <button type="button" onclick="switchEmapTab('code')" id="emapTabCode" class="px-4 py-2.5 rounded-t bg-[#008046] text-white hover:bg-[#006837]">
+                        <i class="fa-solid fa-barcode mr-1"></i>門市店號(Store ID)
+                    </button>
+                    <button type="button" onclick="closeStorePicker()" class="pb-3 pl-3 text-gray-400 hover:text-black text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-4 text-xs">
+                <div class="space-y-1">
+                    <div class="text-orange-600 font-semibold">取貨不付款取貨時，需出示與取件人相同的身份證明文件方可取件。</div>
+                    <div id="emapRedNotice" class="bg-red-600 text-white font-bold px-2.5 py-1 inline-block">
+                        7-ELEVEN門市全年無休(含假日)皆可到店取貨(除特定門市、或遇有不可抗力、特殊情事暫停服務)。
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 pt-2">
+                    <div class="md:col-span-5 space-y-3">
+                        <div id="emapPanelStreet" class="space-y-3">
+                            <div class="text-orange-600 font-bold">* 為必填欄位</div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1"><span class="text-orange-600">*</span> 請選擇縣市</label>
+                                <select id="emapCity" onchange="onEmapCityChange()" class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-[#008046]"></select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">請選擇鄉、鎮、市、區</label>
+                                <select id="emapDist" onchange="onEmapDistChange()" class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-[#008046]"></select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1"><span class="text-orange-600">*</span> 請選擇街道</label>
+                                <select id="emapStreet" onchange="renderEmapStores()" class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-[#008046]"></select>
+                            </div>
+                        </div>
+
+                        <div id="emapPanelSearch" class="hidden space-y-3">
+                            <label id="emapSearchLabel" class="block font-bold text-gray-700">請輸入門市名稱關鍵字</label>
+                            <input type="text" id="emapKeyword" oninput="renderEmapStores()" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-[#008046]" placeholder="例如：赤崁、鶯歌、鑫樂 或店號 135791">
+                            <p class="text-[11px] text-gray-400">輸入關鍵字後，右側將即時顯示符合的門市。</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-7 flex flex-col">
+                        <div class="font-bold text-gray-700 mb-1.5">
+                            <span class="text-orange-600">*</span> 請選擇門市 <span class="font-normal text-gray-500">(灰底為無開放寄 / 收件服務門市)</span>
+                        </div>
+                        <div id="storeListContainer" class="bg-gray-100 border border-gray-300 rounded h-64 overflow-y-auto p-2 space-y-1.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border-t px-5 py-2.5 text-[11px] text-gray-400 text-center">
+                ©2026 AURA LUNARIS × 便利商店電子地圖系統 · 點選右側任一門市即可自動帶入結帳資訊
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let categories = [], products = [], cart = [], currentCategory = '全部';
+        let memberToken = localStorage.getItem('memberToken') || '';
+        let currentUser = JSON.parse(localStorage.getItem('memberUser') || 'null');
+        let pendingBuy = false;
+
+        let currentDetailProduct = null;
+        let selectedDetailSize = '50ml';
+        let detailQuantity = 1;
+
+        let selectedShipping = '7-11 超商取貨';
+        let selectedPayment = '貨到付款';
+        let currentEmapTab = 'street';
+
+        // ================= 資訊與客服條款 =================
+        const INFO_CONTENT = {
+        about: {
+        title: '品牌理念故事 · AURA LUNARIS 時曜',
+        body: '「星軌有跡，草木有靈，尋找你靈魂的命定香氣。」\n\nAURA LUNARIS 時曜成立於對時間與空間的深度探索。我們相信氣味不只是嗅覺的裝飾，更是人與宇宙、自然共鳴的隱形名片。\n\n全系列採用極簡厚底圓柱玻璃與消光玄武黑瓶身，搭配未漂白手工棉紙與金屬燙金星軌印記。透過「時間維度（12 星座／12 生肖地支）」與「空間維度（森林／果香／花香）」的命運疊香法，邀請你在日常裡調配出專屬於己的靈魂氣場。'
+        },
+        shipping: {
+        title: '購物與配送需知',
+        body: '1. 免運優惠：全館單筆消費滿 NT$ 1,000 即享免運費優惠（未滿門檻超商取貨酌收 NT$ 60、宅配 NT$ 100）。\n\n2. 出貨時間：週一至週五工作日每日 15:00 結單出貨，現貨商品將於下單後 1～3 個工作天內寄出，超商取貨約 2～3 天送達指定門市。\n\n3. 付款方式：支援貨到付款、綠界信用卡線上刷卡／ATM 轉帳、LINE Pay 與街口支付。'
+        },
+        return: {
+        title: '鑑賞期與退換貨政策',
+        body: '1. 七日鑑賞期：依據消保法規範，您享有商品到貨次日起算 7 天猶豫期（非試用期）。\n\n2. 沙龍香氛試香規則：正裝香水瓶口均設有防拆封條，若欲退換貨請務必保持外盒、封膜與贈品全新完整，拆封後恕無法辦理退貨。\n\n3. 瑕疵換貨：若收到商品有破損、漏液或品項錯誤，請於 48 小時內拍照聯繫客服信箱 service@auralunaris.com，我們將無條件為您安排免費更換新品。'
+        },
+        faq: {
+        title: '常見問題 (FAQ)',
+        body: 'Q1：請問香水的持香時間大約多久？\nA：AURA LUNARIS 全系列皆為淡香精（EDP，香精濃度 18%～22%）等級，於肌膚上約可維持 6～8 小時，噴灑於衣物織品可持續 12 小時以上。\n\nQ2：什麼是「命運疊香法」？\nA：建議先噴灑 1～2 下「12 星座」或「12 生肖」系列作為靈魂基調，待 30 秒揮發後，再於同一部位疊加「森林／果香／花香」自然系列，能創造出絕不撞香的立體層次。\n\nQ3：為什麼需要註冊會員才能結帳？\nA：為保障您的配送與訂單售後追蹤權益，登入會員後系統會自動記錄您的歷史訂單與配送進度，隨時可在「會員頁面」查詢。'
+        }
+        };
+
+        function openInfoModal(type) {
+        const info = INFO_CONTENT[type];
+        if (!info) return;
+        document.getElementById('infoModalTitle').innerText = info.title;
+        document.getElementById('infoModalBody').innerText = info.body;
+        document.getElementById('infoModal').classList.remove('hidden');
+        }
+        function closeInfoModal() { document.getElementById('infoModal').classList.add('hidden'); }
+
+        const STORE_DATA = {
+        '7-11 超商取貨': [
+        { code: '182741', name: '鶯歌', city: '新北市', dist: '鶯歌區', street: '建國路', addr: '新北市鶯歌區建國路 215 號' },
+        { code: '992143', name: '陶瓷', city: '新北市', dist: '鶯歌區', street: '文化路', addr: '新北市鶯歌區文化路 138 號' },
+        { code: '152849', name: '國慶', city: '新北市', dist: '鶯歌區', street: '國慶街', addr: '新北市鶯歌區國慶街 82 號' },
+        { code: '112233', name: '鑫樂', city: '台北市', dist: '信義區', street: '忠孝東路五段', addr: '台北市信義區忠孝東路五段 11 號' },
+        { code: '162948', name: '站前', city: '台北市', dist: '中正區', street: '忠孝西路一段', addr: '台北市中正區忠孝西路一段 49 號' },
+        { code: '173829', name: '桃園中正', city: '桃園市', dist: '桃園區', street: '中正路', addr: '桃園市桃園區中正路 108 號' },
+        { code: '164738', name: '新竹東門', city: '新竹市', dist: '東區', street: '東門街', addr: '新竹市東區東門街 56 號' },
+        { code: '192847', name: '逢甲', city: '台中市', dist: '西屯區', street: '逢甲路', addr: '台中市西屯區逢甲路 19 號' },
+        { code: '135791', name: '台南赤崁', city: '台南市', dist: '中西區', street: '民族路二段', addr: '台南市中西區民族路二段 208 號' },
+        { code: '135792', name: '台南成大', city: '台南市', dist: '東區', street: '大學路', addr: '台南市東區大學路 18 號' },
+        { code: '135793', name: '台南安平', city: '台南市', dist: '安平區', street: '安平路', addr: '台南市安平區安平路 168 號' },
+        { code: '148293', name: '三多', city: '高雄市', dist: '苓雅區', street: '三多三路', addr: '高雄市苓雅區三多三路 213 號' }
+        ],
+        '全家 超商取貨': [
+        { code: '019284', name: '鶯歌新站', city: '新北市', dist: '鶯歌區', street: '國慶街', addr: '新北市鶯歌區國慶街 115 號' },
+        { code: '018273', name: '陶瓷老街', city: '新北市', dist: '鶯歌區', street: '尖山埔路', addr: '新北市鶯歌區尖山埔路 22 號' },
+        { code: '018472', name: '信義威秀', city: '台北市', dist: '信義區', street: '松壽路', addr: '台北市信義區松壽路 20 號' },
+        { code: '017364', name: '台北車站', city: '台北市', dist: '中正區', street: '北平西路', addr: '台北市中正區北平西路 3 號' },
+        { code: '016888', name: '桃園火車站', city: '桃園市', dist: '桃園區', street: '中正路', addr: '桃園市桃園區中正路 1 號' },
+        { code: '016777', name: '新竹巨城', city: '新竹市', dist: '東區', street: '中央路', addr: '新竹市東區中央路 229 號' },
+        { code: '016253', name: '台中一中', city: '台中市', dist: '北區', street: '一中街', addr: '台中市北區一中街 88 號' },
+        { code: '014111', name: '台南赤崁', city: '台南市', dist: '中西區', street: '西門路二段', addr: '台南市中西區西門路二段 365 號' },
+        { code: '014222', name: '台南成大', city: '台南市', dist: '東區', street: '勝利路', addr: '台南市東區勝利路 118 號' },
+        { code: '015142', name: '高雄新堀江', city: '高雄市', dist: '新興區', street: '文橫二路', addr: '高雄市新興區文橫二路 143 號' }
+        ]
+        };
+
+        const EN_MAP = {
+        '12 星座系列': 'ASTROLOGICAL',
+        '12星座系列': 'ASTROLOGICAL',
+        '12 生肖系列': 'EASTERN ZODIAC',
+        '12生肖系列': 'EASTERN ZODIAC',
+        '森林系列': 'DEEP WOOD',
+        '果香系列': 'WILD ORCHARD',
+        '花香系列': 'POETIC BLOOM'
+        };
+
+        // ================= AURA LUNARIS 完整雙軌尋香系統 =================
+        const ZODIAC_DATA = {
+        aries:       { sign: '白羊座', name: '《初生赤焰》', el: 'fire',  elName: '火象', notes: '粉紅胡椒、血橙、生薑、焚香、雪松', desc: '辛辣清脆如破土而出的第一道晨光，帶著毫不掩飾的生命張力與先鋒勇氣。' },
+        taurus:      { sign: '金牛座', name: '《青苔石階》', el: 'earth', elName: '土象', notes: '佛手柑、無花果葉、橡木苔、廣藿香、鳶尾根', desc: '豐潤濕潤的泥土與草本氣息，在喧囂世界裡築起一座優雅踏實的感官花園。' },
+        gemini:      { sign: '雙子座', name: '《雙生之語》', el: 'air',   elName: '風象', notes: '綠薄荷、羅勒、青檸、橙花、降龍涎香醚', desc: '跳躍多變、清新帶點氣泡感的草本調，如靈感在空氣中輕盈閃爍。' },
+        cancer:      { sign: '巨蟹座', name: '《月汐之擁》', el: 'water', elName: '水象', notes: '米香、椰奶、海鹽、洋甘菊、檀香木', desc: '如月光傾瀉海面的溫暖包裹感，柔和的奶香與檀木帶來深層的安全與歸屬。' },
+        leo:         { sign: '獅子座', name: '《耀金王權》', el: 'fire',  elName: '火象', notes: '苦橙葉、琥珀、藏紅花、沒藥、岩蘭草', desc: '溫暖華麗的乾燥木質與珍貴樹脂，自帶無須張揚卻無法忽視的王者光暈。' },
+        virgo:       { sign: '處女座', name: '《純白秩序》', el: 'earth', elName: '土象', notes: '白松香、快樂鼠尾草、白茶、白麝香、冷杉', desc: '極致純淨、洗練且一絲不苟的皂感草本，為紛擾思緒梳理出澄澈秩序。' },
+        libra:       { sign: '天秤座', name: '《微風平衡》', el: 'air',   elName: '風象', notes: '紫羅蘭葉、鈴蘭、水梨、喀什米爾木、白麝香', desc: '溫柔和諧、不甜不膩的空氣感花果，在理性與感性之間取得最完美的平衡。' },
+        scorpio:     { sign: '天蠍座', name: '《深淵暗湧》', el: 'water', elName: '水象', notes: '黑加侖、大馬士革玫瑰、黑松露、烏木、皮革', desc: '危險、深沉且具有致命吸引力的暗黑玫瑰，越靠近越令人沉醉其中。' },
+        sagittarius: { sign: '射手座', name: '《無垠旅途》', el: 'fire',  elName: '火象', notes: '杜松子、小荳蔻、黑胡椒、癒創木、煙草', desc: '風塵僕僕卻開朗自由的皮革木香，永遠望向遠方地平線的不羈靈魂。' },
+        capricorn:   { sign: '摩羯座', name: '《高崖深松》', el: 'earth', elName: '土象', notes: '黑雲杉、冷岩礦物、乳香、沈香木、乾燥香根草', desc: '冷峻高傲、內斂沉穩的岩石森林，於靜默中蘊藏攀登巔峰的堅毅力量。' },
+        aquarius:    { sign: '水瓶座', name: '《平流層之外》', el: 'air', elName: '風象', notes: '臭氧、粉紅胡椒、金屬冷感、醛香、雪松', desc: '前衛疏離、帶著太空冷冽感的新奇分子調，屬於不隨波逐流的未來觀察者。' },
+        pisces:      { sign: '雙魚座', name: '《夢境之洋》', el: 'water', elName: '水象', notes: '睡蓮、海風水生調、龍涎香、安息香、粉質鳶尾', desc: '如夢似幻、模糊現實與夢境邊界的微鹹水霧，溫柔承接所有細膩情緒。' }
+        };
+
+        const EASTERN_DATA = [
+        { animal: '子鼠', wuxing: '水', name: '《夜靈引》', craft: '微瀾星露', notes: '冷杉、睡蓮、沉香、龍涎香' },
+        { animal: '丑牛', wuxing: '土', name: '《原野耕煙》', craft: '地脈麥浪', notes: '乾草、麥穗、皮革、零陵香豆、安息香' },
+        { animal: '寅虎', wuxing: '木', name: '《嘯林破曉》', craft: '層巒疊嶂', notes: '黑胡椒、煙熏雪松、松針、岩蘭草' },
+        { animal: '卯兔', wuxing: '木', name: '《月宮掬露》', craft: '修竹流雲', notes: '白茶、白玉蘭、金桂、羊絨木' },
+        { animal: '辰龍', wuxing: '土/水', name: '《雲起雷淵》', craft: '翻雲騰海', notes: '海鹽、礦物、乳香、烏木、龍涎香' },
+        { animal: '巳蛇', wuxing: '火', name: '《幽壑淬火》', craft: '幽壑靈鱗', notes: '血橙、黑玫瑰、沒藥、黑琥珀、沉香' },
+        { animal: '午馬', wuxing: '火', name: '《瀚海追陽》', craft: '奔鬃狂沙', notes: '苦橙葉、藏紅花、馬鞍皮、金琥珀' },
+        { animal: '未羊', wuxing: '土', name: '《雲岫素絨》', craft: '祥雲柔角', notes: '白梨、鳶尾根、羊絨奶香、老檀香' },
+        { animal: '申猴', wuxing: '金', name: '《靈崖嘯風》', craft: '古松攀藤', notes: '青柚、無花果、松脂、橡木苔' },
+        { animal: '酉雞', wuxing: '金', name: '《晨鐘破曉》', craft: '疊翎披光', notes: '金桔、苦橙花、綠乳香、降真香' },
+        { animal: '戌狗', wuxing: '土/火', name: '《原野霜楓》', craft: '楓葉凝霜', notes: '冬日甜橙、紅楓、烤栗子、安息香' },
+        { animal: '亥豬', wuxing: '水', name: '《幽泉夜露》', craft: '垂露涵泉', notes: '高山泉水、白睡蓮、青苔、灰琥珀' }
+        ];
+
+        const CNY_DATES = {
+        1950:[2,17],1951:[2,6],1952:[1,27],1953:[2,14],1954:[2,3],1955:[1,24],1956:[2,12],1957:[1,31],1958:[2,18],1959:[2,8],
+        1960:[1,28],1961:[2,15],1962:[2,5],1963:[1,25],1964:[2,13],1965:[2,2],1966:[1,21],1967:[2,9],1968:[1,30],1969:[2,17],
+        1970:[2,6],1971:[1,27],1972:[2,15],1973:[2,3],1974:[1,23],1975:[2,11],1976:[1,31],1977:[2,18],1978:[2,7],1979:[1,28],
+        1980:[2,16],1981:[2,5],1982:[1,25],1983:[2,13],1984:[2,2],1985:[2,20],1986:[2,9],1987:[1,29],1988:[2,17],1989:[2,6],
+        1990:[1,27],1991:[2,15],1992:[2,4],1993:[1,23],1994:[2,10],1995:[1,31],1996:[2,19],1997:[2,7],1998:[1,28],1999:[2,16],
+        2000:[2,5],2001:[1,24],2002:[2,12],2003:[2,1],2004:[1,22],2005:[2,9],2006:[1,29],2007:[2,18],2008:[2,7],2009:[1,26],
+        2010:[2,14],2011:[2,3],2012:[1,23],2013:[2,10],2014:[1,31],2015:[2,19],2016:[2,8],2017:[1,28],2018:[2,16],2019:[2,5],
+        2020:[1,25],2021:[2,12],2022:[2,1],2023:[1,22],2024:[2,10],2025:[1,29],2026:[2,17]
+        };
+
+        const LAYERING_MATRIX = {
+        wood: {
+        fire:  { name: '《迷霧雨林》', clean: '迷霧雨林', series: '森林系列', desc: '先以主香點燃內心的熱烈火光，再於手腕疊加《迷霧雨林》濕潤的地衣與扁柏，將張揚化為胸有成竹的沉穩氣場。' },
+        air:   { name: '《迷霧雨林》', clean: '迷霧雨林', series: '森林系列', desc: '輕盈飄逸的風象氣場遇上《迷霧雨林》的蕨類與濕潤泥土，彷彿高空雲霧降落林間，收斂思緒並沉澱心神。' },
+        earth: { name: '《古寺青檜》', clean: '古寺青檜', series: '森林系列', desc: '大地根系與《古寺青檜》的日本扁柏、焚香深度共鳴，在肌膚上展開肅穆沉靜的冥想空間，餘韻悠長。' },
+        water: { name: '《黑曜北境》', clean: '黑曜北境', series: '森林系列', desc: '流動的水意疊上《黑曜北境》的杜松與煙燻樺木焦油，為柔美水氣築起冷峻深邃的針葉林木質骨架。' }
+        },
+        fruit: {
+        fire:  { name: '《苦柚微醺》', clean: '苦柚微醺', series: '果香系列', desc: '辛香火光與《苦柚微醺》的白柚皮苦韻、通寧水氣泡激烈碰撞，瞬間提亮整體層次，展現破曉般的鮮活能量。' },
+        water: { name: '《苦柚微醺》', clean: '苦柚微醺', series: '果香系列', desc: '幽微水氣揉合《苦柚微醺》的微酸果皮氣泡，像月光下輕啜一口冰鎮氣泡酒，清冽而不落俗套。' },
+        earth: { name: '《晨摘無花果》', clean: '無花果', series: '果香系列', desc: '以《晨摘無花果》的無花果葉與奶綠椰汁柔化厚重泥土氣息，宛如午後坐在陽光穿透的無花果樹下般自在。' },
+        air:   { name: '《黑醋栗荊棘》', clean: '黑醋栗', series: '果香系列', desc: '空氣感香調疊擦《黑醋栗荊棘》的深色莓果與月桂葉，在優雅距離感中注入一抹帶刺的野性與微酸張力。' }
+        },
+        flower: {
+        water: { name: '《冷浸白玉蘭》', clean: '白玉蘭', series: '花香系列', desc: '水生花香與《冷浸白玉蘭》的夜開白花、晨露交融，在肌膚上散發極致空靈清麗、不食人間煙火的仙氣。' },
+        air:   { name: '《冷浸白玉蘭》', clean: '白玉蘭', series: '花香系列', desc: '微風托起《冷浸白玉蘭》的茉莉與降龍涎香醚，如同深夜隨風飄散的冷冽白花香，乾淨而令人過目難忘。' },
+        earth: { name: '《十里秋桂》', clean: '十里秋桂', series: '花香系列', desc: '沉穩木質根系襯托《十里秋桂》的金桂與烏龍茶湯底蘊，呈現溫潤優雅、如詩般綿長的東方茶花韻。' },
+        fire:  { name: '《野薔薇刺》', clean: '野薔薇', series: '花香系列', desc: '熾熱火光與《野薔薇刺》的保加利亞玫瑰、荊棘綠意完美呼應，展現熱烈不羈、拒絕被馴服的致命魅力。' }
+        }
+        };
+
+        const FLOW_B_QUESTIONS = [
+        {
+        title: '第 1 題｜時空場景直覺\n「如果能瞬間移動到一個只屬於你的秘密空間，你最想推開哪一扇門？」',
+        opts: [
+        { label: 'A. 夕陽餘暉灑落的曠野峽谷，空氣中瀰漫乾燥木柴與微辛暖風', score: { fire: 2, bold: 1 }, tag: 'A' },
+        { label: 'B. 晨霧未散的百年古林石階，腳下是濕潤青苔與沉穩松柏', score: { earth: 2, subtle: 1 }, tag: 'B' },
+        { label: 'C. 高聳雲端之上的玻璃天文台，微風輕拂著潔白書頁與冷冽空氣', score: { air: 2, subtle: 1 }, tag: 'C' },
+        { label: 'D. 滿月高懸的靜謐深潭畔，夜開睡蓮在水霧中散發幽微香氣', score: { water: 2, subtle: 1 }, tag: 'D' }
+        ]
+        },
+        {
+        title: '第 2 題｜社交與處事氣場\n「在群體或重要場合中，你通常散發出什麼樣的氣場？」',
+        opts: [
+        { label: 'A. 充滿熱情與行動力，總能點燃氣氛、果斷破局', score: { fire: 2, bold: 1 }, tag: 'A' },
+        { label: 'B. 沉穩可靠、不疾不徐，像大地一樣讓人感到安心與信任', score: { earth: 2 }, tag: 'B' },
+        { label: 'C. 思維跳躍、幽默機敏，與人保持剛剛好的優雅距離與空氣感', score: { air: 2 }, tag: 'C' },
+        { label: 'D. 感性敏銳、深邃神秘，習慣先觀察並洞悉他人的情緒暗流', score: { water: 2, bold: 1 }, tag: 'D' }
+        ]
+        },
+        {
+        title: '第 3 題｜材質與觸覺共鳴\n「閉上眼睛觸摸以下四種材質，哪一種最能讓你感到身心共鳴？」',
+        opts: [
+        { label: 'A. 經歲月摩挲的溫厚手作鞍革與炙熱古銅', score: { fire: 1, earth: 1, bold: 1 }, tag: 'A' },
+        { label: 'B. 未經打磨的天然原石與乾燥麥穗棉紙', score: { earth: 2, subtle: 1 }, tag: 'B' },
+        { label: 'C. 冰涼透徹的幾何切割水晶與微霧金屬', score: { air: 2 }, tag: 'C' },
+        { label: 'D. 絲滑涼潤的深海珍珠母貝與黑曜石', score: { water: 2 }, tag: 'D' }
+        ]
+        },
+        {
+        title: '第 4 題｜氣味記憶偏愛\n「下列哪一種氣味瞬間，最容易勾起你的心動？」',
+        opts: [
+        { label: 'A. 剛研磨好的黑胡椒、藏紅花與壁爐燃燒的樹脂暖煙', score: { fire: 2, bold: 2 }, tag: 'A' },
+        { label: 'B. 雨後撥開無花果葉的青澀綠意，或晒透的乾草與白茶', score: { earth: 1, air: 1, subtle: 1 }, tag: 'B' },
+        { label: 'C. 咬開一顆帶皮微苦的冰鎮青柚，夾雜薄荷與羅勒的清涼氣泡', score: { air: 2, subtle: 1 }, tag: 'C' },
+        { label: 'D. 深夜綻放的帶刺紅玫瑰，交織潮濕泥土與微鹹海風', score: { water: 2, bold: 1 }, tag: 'D' }
+        ]
+        },
+        {
+        title: '第 5 題｜此刻的靈魂渴望\n「噴上命定香水的這一刻，你希望這股氣息為你帶來什麼樣的加持？」',
+        opts: [
+        { label: 'A. 【靜心定神】 遠離喧囂，進入絕對專注與沉靜的森林領域', scene: 'wood', tag: 'A' },
+        { label: 'B. 【鮮活破曉】 注入多汁爽朗的自然能量，展現不落俗套的朝氣', scene: 'fruit', tag: 'B' },
+        { label: 'C. 【詩意綻放】 增添溫柔、空靈或帶點野性的迷人花韻層次', scene: 'flower', tag: 'C' }
+        ]
+        }
+        ];
+
+        let flowBStep = 0;
+        let flowBScores = { fire: 0, earth: 0, air: 0, water: 0, bold: 0, subtle: 0 };
+        let flowBChoices = [];
+        let flowBScene = 'wood';
+
+        function openScentQuiz() {
+        resetToWelcome();
+        document.getElementById('scentQuizModal').classList.remove('hidden');
+        }
+        function closeScentQuiz() { document.getElementById('scentQuizModal').classList.add('hidden'); }
+
+        function resetToWelcome() {
+        document.getElementById('quizStepWelcome').classList.remove('hidden');
+        document.getElementById('quizFlowA').classList.add('hidden');
+        document.getElementById('quizFlowB').classList.add('hidden');
+        document.getElementById('quizResultBox').classList.add('hidden');
+        }
+
+        function enterFlowA() {
+        document.getElementById('quizStepWelcome').classList.add('hidden');
+        document.getElementById('quizFlowA').classList.remove('hidden');
+        }
+
+        function enterFlowB() {
+        flowBStep = 0;
+        flowBScores = { fire: 0, earth: 0, air: 0, water: 0, bold: 0, subtle: 0 };
+        flowBChoices = [];
+        document.getElementById('quizStepWelcome').classList.add('hidden');
+        document.getElementById('quizFlowB').classList.remove('hidden');
+        renderFlowBStep();
+        }
+
+        function getWesternZodiacKey(m, d) {
+        if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return 'aries';
+        if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return 'taurus';
+        if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return 'gemini';
+        if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return 'cancer';
+        if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return 'leo';
+        if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return 'virgo';
+        if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return 'libra';
+        if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return 'scorpio';
+        if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return 'sagittarius';
+        if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return 'capricorn';
+        if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return 'aquarius';
+        return 'pisces';
+        }
+
+        function calculateFlowA(e) {
+        e.preventDefault();
+        const val = document.getElementById('flowABirthdate').value;
+        if (!val) return;
+        const [y, m, d] = val.split('-').map(Number);
+        const scene = document.querySelector('input[name="flowAScene"]:checked').value;
+
+        const zKey = getWesternZodiacKey(m, d);
+        const zodiac = ZODIAC_DATA[zKey];
+
+        let lunarYear = y;
+        const cny = CNY_DATES[y];
+        if (cny) {
+        if (m < cny[0] || (m === cny[0] && d < cny[1])) lunarYear = y - 1;
+        } else if (m === 1 || (m === 2 && d <= 4)) {
+        lunarYear = y - 1;
+        }
+        const easternIdx = ((lunarYear - 4) % 12 + 12) % 12;
+        const eastern = EASTERN_DATA[easternIdx];
+
+        const coordTitle = `你的生辰座標：${zodiac.sign} × ${eastern.animal}`;
+        renderFinalReport(coordTitle, zodiac, eastern, scene);
+        }
+
+        function renderFlowBStep() {
+        const q = FLOW_B_QUESTIONS[flowBStep];
+        document.getElementById('quizStepText').innerText = `第 ${flowBStep + 1} 題 / 共 5 題`;
+        document.getElementById('quizProgressBar').style.width = `${((flowBStep + 1) / 5) * 100}%`;
+        document.getElementById('quizQuestionTitle').innerText = q.title;
+        document.getElementById('quizOptionsList').innerHTML = q.opts.map((o, idx) => `
+        <button type="button" onclick="pickFlowBOption(${idx})" class="w-full text-left p-3.5 rounded-xl bg-[#070909] border border-white/15 hover:border-[#c8a45d] hover:bg-[#c8a45d]/10 transition flex items-center justify-between group">
+        <span class="text-gray-200 group-hover:text-[#e6c786] leading-relaxed pr-2">${o.label}</span>
+        <i class="fa-solid fa-chevron-right text-xs text-gray-500 group-hover:text-[#c8a45d] flex-shrink-0"></i>
+        </button>`).join('');
+        }
+
+        function pickFlowBOption(idx) {
+        const opt = FLOW_B_QUESTIONS[flowBStep].opts[idx];
+        flowBChoices.push(opt.tag);
+        if (opt.score) {
+        for (const [k, v] of Object.entries(opt.score)) flowBScores[k] += v;
+        }
+        if (opt.scene) flowBScene = opt.scene;
+
+        if (flowBStep < FLOW_B_QUESTIONS.length - 1) {
+        flowBStep++;
+        renderFlowBStep();
+        } else {
+        calculateFlowBResult();
+        }
+        }
+
+        function calculateFlowBResult() {
+        const elems = ['fire', 'water', 'earth', 'air'];
+        const maxScore = Math.max(...elems.map(k => flowBScores[k]));
+        let topElems = elems.filter(k => flowBScores[k] === maxScore);
+
+        let dominant = topElems[0];
+        if (topElems.length > 1) {
+        const q1Map = { A: 'fire', B: 'earth', C: 'air', D: 'water' };
+        const q4Map = { A: 'fire', B: 'earth', C: 'air', D: 'water' };
+        const q1El = q1Map[flowBChoices[0]];
+        const q4El = q4Map[flowBChoices[3]];
+        if (q1El === q4El && topElems.includes(q1El)) dominant = q1El;
+        }
+
+        const others = elems.filter(k => k !== dominant).sort((a, b) => flowBScores[b] - flowBScores[a]);
+        const secondEl = others[0];
+        const isBold = flowBScores.bold >= flowBScores.subtle;
+
+        let zKey = 'aries', eIdx = 6, coordSub = '';
+        if (dominant === 'fire') {
+        if (isBold && flowBChoices[0] === 'A') { zKey = 'aries'; eIdx = 6; coordSub = '火象先鋒・破曉赤焰'; }
+        else if (isBold && (flowBChoices[1] === 'A' || flowBChoices[3] === 'A')) { zKey = 'leo'; eIdx = 5; coordSub = '火象領袖・耀金王權'; }
+        else { zKey = 'sagittarius'; eIdx = 2; coordSub = '火象旅人・無垠自由'; }
+        } else if (dominant === 'earth') {
+        if (!isBold && flowBChoices[2] === 'B') { zKey = 'taurus'; eIdx = 1; coordSub = '土象療癒・厚土生機'; }
+        else if (secondEl === 'air') { zKey = 'virgo'; eIdx = 7; coordSub = '土象秩序・純白澄澈'; }
+        else { zKey = 'capricorn'; eIdx = 10; coordSub = '土象守望・高崖深松'; }
+        } else if (dominant === 'air') {
+        if (flowBChoices[3] === 'C') { zKey = 'gemini'; eIdx = 8; coordSub = '風象機敏・靈動氣泡'; }
+        else if (secondEl === 'earth' || secondEl === 'water') { zKey = 'libra'; eIdx = 3; coordSub = '風象平衡・微風詩意'; }
+        else { zKey = 'aquarius'; eIdx = 9; coordSub = '風象前衛・星際冷感'; }
+        } else {
+        if (!isBold) { zKey = 'cancer'; eIdx = 11; coordSub = '水象守護・月汐溫擁'; }
+        else if (isBold && flowBChoices[3] === 'D') { zKey = 'scorpio'; eIdx = 4; coordSub = '水象深邃・暗湧魅惑'; }
+        else { zKey = 'pisces'; eIdx = 0; coordSub = '水象造夢・微瀾夢境'; }
+        }
+
+        renderFinalReport(`你的時曜座標：${coordSub}`, ZODIAC_DATA[zKey], EASTERN_DATA[eIdx], flowBScene);
+        }
+
+        // 查詢並直接跳轉至推薦商品詳情頁（若尚未上架則導向該系列）
+        async function jumpToProductPage(keywords, fallbackCat) {
+        closeScentQuiz();
+        const res = await fetch('/api/products');
+        const allList = await res.json();
+        products = allList;
+        const match = allList.find(p => keywords.some(kw => kw && p.name.includes(kw)));
+        if (match) {
+        openProductDetail(match.id);
+        } else {
+        selectAndScroll(fallbackCat);
+        }
+        }
+
+        function renderFinalReport(coordTitle, zodiac, eastern, scene) {
+        document.getElementById('quizFlowA').classList.add('hidden');
+        document.getElementById('quizFlowB').classList.add('hidden');
+        document.getElementById('quizResultBox').classList.remove('hidden');
+
+        const layer = LAYERING_MATRIX[scene][zodiac.el];
+        const zClean = zodiac.name.replace(/[《》]/g, '');
+        const eClean = eastern.name.replace(/[《》]/g, '');
+
+        document.getElementById('quizResCoord').innerText = coordTitle;
+        document.getElementById('resZodiacTitle').innerText = `西方星象瓶：${zodiac.sign} · ${zodiac.name}（${zodiac.elName}）`;
+        document.getElementById('resZodiacNotes').innerText = `核心香材：${zodiac.notes}`;
+        document.getElementById('resZodiacDesc').innerText = zodiac.desc;
+
+        document.getElementById('resEasternTitle').innerText = `東方典藏瓶：${eastern.animal}（${eastern.wuxing}）· ${eastern.name}`;
+        document.getElementById('resEasternCraft').innerText = `專屬微雕工藝：${eastern.craft}`;
+        document.getElementById('resEasternNotes').innerText = `東方香材：${eastern.notes}`;
+
+        document.getElementById('resFormula').innerText = `命運疊香公式：${zodiac.name} ＋ ${layer.series}${layer.name}`;
+        document.getElementById('resChemistry').innerText = layer.desc;
+
+        // 綁定三張推薦卡片各自直接跳轉對應商品頁面
+        document.getElementById('resZodiacCard').onclick = () => jumpToProductPage([zClean, zodiac.sign.slice(0,2)], '12 星座系列');
+        document.getElementById('resEasternCard').onclick = () => jumpToProductPage([eClean, eastern.animal], '12 生肖系列');
+        document.getElementById('resLayerCard').onclick = () => jumpToProductPage([layer.clean], layer.series);
+
+        const ritualMap = {
+        fire: '建議噴灑於「手腕脈搏與鎖骨處」，體溫會將辛香與木質樹脂完美擴散；疊香請輕點於「衣領內側」營造沉穩遠韻。',
+        earth: '建議將主香噴灑於「耳後與胸口」，疊香噴灑於「大衣袖口或膝後」，隨步伐流動帶出如森林呼吸般的貼膚層次。',
+        air: '建議於「雙肩與空中噴灑香霧走入」，讓輕透的空氣感分子均勻包覆髮絲與衣袖，保持一整天優雅不膩的留白氣場。',
+        water: '建議在「沐浴後微濕的鎖骨與手腕內側」先噴主香，30 秒後疊擦自然香調，最能展現水生花香與樹脂交織的迷濛張力。'
+        };
+        document.getElementById('resRitual').innerText = ritualMap[zodiac.el];
+
+        document.getElementById('quizGoShopBtn').onclick = () => jumpToProductPage([zClean, zodiac.sign.slice(0,2), eClean, eastern.animal], '12 星座系列');
+        }
+
+        function getPriceForSize(size) {
+        if (!currentDetailProduct) return 0;
+        try {
+        const prices = JSON.parse(currentDetailProduct.prices_json || '{}');
+        if (prices[size]) return prices[size];
+        } catch(e){}
+        if (size === '30ml') return Math.round(currentDetailProduct.price * 0.6);
+        if (size === '100ml') return Math.round(currentDetailProduct.price * 1.6);
+        return currentDetailProduct.price;
+        }
+
+        async function loadCategories() {
+        const res = await fetch('/api/categories');
+        categories = await res.json();
+        const allCats = ['全部', ...categories.map(c => c.name)];
+
+        document.getElementById('topCategoryNav').innerHTML = categories.map(c => `
+        <button onclick="selectAndScroll('${c.name}')" class="text-center group">
+        <div class="text-xs font-serif-tc tracking-[0.15em] ${currentCategory === c.name ? 'text-[#e6c786] font-bold' : 'text-gray-200 group-hover:text-[#e6c786]'} transition">${c.name}</div>
+        <div class="text-[9px] tracking-[0.18em] text-[#c8a45d]/70 uppercase">${EN_MAP[c.name] || 'COLLECTION'}</div>
+        </button>`).join('');
+
+        document.getElementById('categoryPills').innerHTML = allCats.map(c => `
+        <button onclick="setCategory('${c}')" class="px-3.5 py-1.5 rounded text-xs tracking-wider border transition ${currentCategory === c ? 'bg-[#c8a45d] text-black border-[#c8a45d] font-bold' : 'border-white/15 text-gray-400 hover:border-[#c8a45d]/50 hover:text-white'}">
+        ${c === '全部' ? '全部系列' : c}
+        </button>`).join('');
+
+        document.getElementById('sidebarCategoryList').innerHTML = allCats.map(c => `
+        <button onclick="selectAndScroll('${c}'); toggleSidebar();" class="w-full text-left px-3 py-2.5 rounded hover:bg-white/5 flex justify-between items-center ${currentCategory === c ? 'text-[#e6c786] font-bold' : 'text-gray-300'}">
+        <span>${c === '全部' ? '全部香氛館藏' : c}</span><i class="fa-solid fa-angle-right text-xs text-[#c8a45d]/50"></i>
+        </button>`).join('');
+        }
+
+        function selectAndScroll(cat) {
+        loadProducts(cat);
+        document.getElementById('collectionSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function loadProducts(cat = '全部') {
+        currentCategory = cat;
+        document.getElementById('currentCategoryTitle').innerText = cat === '全部' ? '全部香氛館藏' : cat;
+        await loadCategories();
+        const res = await fetch(cat === '全部' ? '/api/products' : '/api/products?category=' + encodeURIComponent(cat));
+        products = await res.json();
+
+        document.getElementById('productGrid').innerHTML = products.length === 0
+        ? `<div class="col-span-4 text-center py-16 border border-[#c8a45d]/20 rounded-lg bg-[#0c110f]">
+        <div class="text-sm text-[#e6c786] font-serif-tc tracking-widest mb-1">「${cat === '全部' ? '全館' : cat}」尚無上架香氛</div>
+        <p class="text-xs text-gray-500 mb-4">您可進入管理後台新增大分類、上傳瓶身照與設定不同容量價格</p>
+        <a href="/admin.html" class="inline-block text-xs border border-[#c8a45d]/60 text-[#e6c786] hover:bg-[#c8a45d] hover:text-black px-5 py-2 rounded tracking-widest transition">前往管理後台</a>
+        </div>`
+        : products.map(p => `
+        <div onclick="openProductDetail(${p.id})" class="cursor-pointer bg-[#0d1210] border border-[#c8a45d]/25 rounded-lg overflow-hidden flex flex-col group hover:border-[#c8a45d] transition duration-300">
+        <div class="relative overflow-hidden bg-[#060807] aspect-[4/5]">
+        <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        <span class="absolute top-3 left-3 bg-black/80 border border-[#c8a45d]/40 text-[#e6c786] text-[10px] px-2.5 py-0.5 tracking-widest">${p.category}</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1 justify-between">
+        <div>
+        <h4 class="text-base font-serif-tc font-semibold text-[#f4f1ea] tracking-wider mb-2">${p.name}</h4>
+        <p class="text-xs text-gray-400 whitespace-pre-line leading-relaxed mb-4 line-clamp-2">${p.description}</p>
+        </div>
+        <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+        <span class="text-base font-bold text-[#e6c786]">NT$ ${p.price} 起</span>
+        <span class="text-[11px] text-[#c8a45d] hover:underline">查看介紹 →</span>
+        </div>
+        </div>
+        </div>`).join('');
+        }
+
+        function setCategory(cat) { loadProducts(cat); }
+        function toggleSidebar() { document.getElementById('sidebarDrawer').classList.toggle('hidden'); }
+        function toggleCart(open = false) { const d = document.getElementById('cartDrawer'); open ? d.classList.remove('hidden') : d.classList.toggle('hidden'); }
+
+        function openProductDetail(id) {
+        const p = products.find(x => x.id === id);
+        if (!p) return;
+        currentDetailProduct = p;
+        selectedDetailSize = '50ml';
+        detailQuantity = 1;
+        document.getElementById('detailQty').innerText = '1';
+        document.getElementById('detailImg').src = p.image_url;
+        document.getElementById('detailCategory').innerText = p.category;
+        document.getElementById('detailName').innerText = p.name;
+        document.getElementById('detailPrice').innerText = 'NT$ ' + getPriceForSize('50ml');
+        document.getElementById('detailDesc').innerText = p.description;
+
+        let allImgs = [];
+        try { allImgs = JSON.parse(p.images_json || '[]'); } catch(e){}
+        if (!allImgs.length && p.image_url) allImgs = [p.image_url];
+
+        const thumbBox = document.getElementById('detailThumbnails');
+        if (allImgs.length > 1) {
+        thumbBox.innerHTML = allImgs.map((img, i) => `
+        <img src="${img}" onclick="document.getElementById('detailImg').src = '${img}'; this.parentElement.querySelectorAll('img').forEach(el => el.className = 'w-14 h-16 object-cover rounded-lg border-2 border-white/10 cursor-pointer'); this.className = 'w-14 h-16 object-cover rounded-lg border-2 border-[#c8a45d] cursor-pointer';"
+        class="w-14 h-16 object-cover rounded-lg border-2 cursor-pointer transition ${i === 0 ? 'border-[#c8a45d]' : 'border-white/10 hover:border-white/40'}">
+        `).join('');
+        } else {
+        thumbBox.innerHTML = '';
+        }
+
+        document.querySelectorAll('.size-btn').forEach(b => {
+        const is50 = b.innerText.includes('50ml');
+        b.className = is50
+        ? 'size-btn px-5 py-2 rounded border border-[#c8a45d] text-[#e6c786] text-xs font-bold bg-[#c8a45d]/10 transition'
+        : 'size-btn px-5 py-2 rounded border border-white/20 text-xs hover:border-[#c8a45d] transition';
+        });
+
+        document.getElementById('productDetailModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductDetail() {
+        document.getElementById('productDetailModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        }
+
+        function changeDetailQty(delta) {
+        if (!currentDetailProduct) return;
+        const next = detailQuantity + delta;
+        if (next >= 1 && next <= currentDetailProduct.stock) {
+        detailQuantity = next;
+        document.getElementById('detailQty').innerText = detailQuantity;
+        }
+        }
+
+        function selectDetailSize(size, btn) {
+        selectedDetailSize = size;
+        document.querySelectorAll('.size-btn').forEach(b => {
+        b.className = 'size-btn px-5 py-2 rounded border border-white/20 text-xs hover:border-[#c8a45d] transition';
+        });
+        btn.className = 'size-btn px-5 py-2 rounded border border-[#c8a45d] text-[#e6c786] text-xs font-bold bg-[#c8a45d]/10 transition';
+        document.getElementById('detailPrice').innerText = 'NT$ ' + getPriceForSize(size);
+        }
+
+        function addDetailToCart() {
+        if (!currentDetailProduct) return;
+        const sizePrice = getPriceForSize(selectedDetailSize);
+        const p = { ...currentDetailProduct, price: sizePrice };
+        const size = selectedDetailSize;
+        const ex = cart.find(x => x.id === p.id && x.size === size);
+        if (ex) {
+        if (ex.quantity + detailQuantity > p.stock) return alert('已達庫存上限！');
+        ex.quantity += detailQuantity;
+        } else {
+        cart.push({ ...p, size, quantity: detailQuantity });
+        }
+        updateCartUI();
+        closeProductDetail();
+        toggleCart(true);
+        }
+
+        function updateCartUI() {
+        document.getElementById('cartCount').innerText = cart.reduce((a, b) => a + b.quantity, 0);
+        document.getElementById('cartTotal').innerText = 'NT$ ' + cart.reduce((a, b) => a + b.price * b.quantity, 0);
+        document.getElementById('checkoutBtn').disabled = cart.length === 0;
+        document.getElementById('cartItems').innerHTML = cart.length === 0 ? '<div class="text-center py-16 text-gray-500 text-sm">購物袋目前是空的</div>' : cart.map((item, i) => `
+        <div class="py-4 flex gap-3 items-center">
+        <img src="${item.image_url}" class="w-14 h-16 object-cover rounded border border-white/10">
+        <div class="flex-1">
+        <h5 class="text-xs font-bold text-[#f4f1ea]">${item.name}</h5>
+        <span class="text-[11px] text-gray-400">容量: ${item.size} x ${item.quantity}</span>
+        <div class="text-xs font-bold text-[#e6c786] mt-1">NT$ ${item.price * item.quantity}</div>
+        </div>
+        <button onclick="cart.splice(${i},1);updateCartUI()" class="text-gray-500 hover:text-red-400 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
+        </div>`).join('');
+        }
+
+        function selectShipping(method, btn) {
+        selectedShipping = method;
+        document.querySelectorAll('.shipping-btn').forEach(b => {
+        b.className = 'shipping-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-center';
+        });
+        btn.className = 'shipping-btn p-2.5 rounded border border-[#c8a45d] text-[#e6c786] font-bold bg-[#c8a45d]/10 text-center';
+
+        const isHome = method === '宅配到府';
+        document.getElementById('homeAddressBox').classList.toggle('hidden', !isHome);
+        document.getElementById('storeInputBox').classList.toggle('hidden', isHome);
+        if (!isHome) {
+        document.getElementById('storeLabel').innerText = method.includes('7-11') ? '7-11 取件超商門市' : '全家 取件超商門市';
+        document.getElementById('custStore').value = '';
+        document.getElementById('noStoreSelected').classList.remove('hidden');
+        document.getElementById('storeSelectedCard').classList.add('hidden');
+        }
+        }
+
+        function selectPayment(method, btn) {
+        selectedPayment = method;
+        document.querySelectorAll('.payment-btn').forEach(b => {
+        b.className = 'payment-btn p-2.5 rounded border border-white/15 text-gray-400 hover:border-[#c8a45d] text-left flex items-center justify-between';
+        });
+        btn.className = 'payment-btn p-2.5 rounded border border-[#c8a45d] text-[#e6c786] font-bold bg-[#c8a45d]/10 text-left flex items-center justify-between';
+        document.getElementById('ecpayTip').classList.toggle('hidden', method === '貨到付款');
+        }
+
+        function openEcpayMap() {
+        const subType = selectedShipping.includes('7-11') ? 'UNIMART' : 'FAMI';
+        window.open(`/api/ecpay/map?logistics_sub_type=${subType}`, 'ecpayMap', 'width=900,height=650');
+        }
+
+        window.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'ECPAY_STORE') {
+        const s = event.data.store;
+        selectStoreItem(s.name, s.id, s.addr);
+        }
+        });
+
+        function openStorePicker() {
+        const is711 = selectedShipping.includes('7-11');
+        document.getElementById('emapBrandBadge').innerText = is711 ? '7-ELEVEN' : 'FamilyMart 全家';
+        document.getElementById('emapBrandBadge').style.color = is711 ? '#008046' : '#0068b7';
+        document.getElementById('emapRedNotice').innerText = is711
+        ? '7-ELEVEN門市全年無休(含假日)皆可到店取貨(除特定門市、或遇有不可抗力、特殊情事暫停服務)。'
+        : '全家便利商店全年無休(含假日)皆可到店取貨(特殊節慶或特定校園/廠區門市除外)。';
+
+        const list = STORE_DATA[selectedShipping] || [];
+        const cities = [...new Set(list.map(s => s.city))];
+        document.getElementById('emapCity').innerHTML = '<option value="">請選擇</option>' + cities.map(c => `<option value="${c}">${c}</option>`).join('');
+        document.getElementById('emapDist').innerHTML = '<option value="">請選擇</option>';
+        document.getElementById('emapStreet').innerHTML = '<option value="">請選擇</option>';
+        document.getElementById('emapKeyword').value = '';
+
+        switchEmapTab('street');
+        document.getElementById('storePickerModal').classList.remove('hidden');
+        }
+
+        function closeStorePicker() { document.getElementById('storePickerModal').classList.add('hidden'); }
+
+        function switchEmapTab(tab) {
+        currentEmapTab = tab;
+        const activeCls = 'px-4 py-2.5 rounded-t border-t border-l border-r border-gray-300 bg-white text-[#008046] -mb-[4px] border-b-4 border-b-white';
+        const inactiveCls = 'px-4 py-2.5 rounded-t bg-[#008046] text-white hover:bg-[#006837]';
+
+        document.getElementById('emapTabStreet').className = tab === 'street' ? activeCls : inactiveCls;
+        document.getElementById('emapTabName').className = tab === 'name' ? activeCls : inactiveCls;
+        document.getElementById('emapTabCode').className = tab === 'code' ? activeCls : inactiveCls;
+
+        document.getElementById('emapPanelStreet').classList.toggle('hidden', tab !== 'street');
+        document.getElementById('emapPanelSearch').classList.toggle('hidden', tab === 'street');
+        if (tab === 'name') {
+        document.getElementById('emapSearchLabel').innerText = '請輸入門市名稱關鍵字';
+        document.getElementById('emapKeyword').placeholder = '例如：赤崁、鶯歌、鑫樂、逢甲...';
+        } else if (tab === 'code') {
+        document.getElementById('emapSearchLabel').innerText = '請輸入 6 碼門市店號 (Store ID)';
+        document.getElementById('emapKeyword').placeholder = '例如：135791、182741...';
+        }
+        renderEmapStores();
+        }
+
+        function onEmapCityChange() {
+        const city = document.getElementById('emapCity').value;
+        const list = (STORE_DATA[selectedShipping] || []).filter(s => s.city === city);
+        const dists = [...new Set(list.map(s => s.dist))];
+        document.getElementById('emapDist').innerHTML = '<option value="">請選擇</option>' + dists.map(d => `<option value="${d}">${d}</option>`).join('');
+        document.getElementById('emapStreet').innerHTML = '<option value="">請選擇</option>';
+        renderEmapStores();
+        }
+
+        function onEmapDistChange() {
+        const city = document.getElementById('emapCity').value;
+        const dist = document.getElementById('emapDist').value;
+        const list = (STORE_DATA[selectedShipping] || []).filter(s => s.city === city && s.dist === dist);
+        const streets = [...new Set(list.map(s => s.street))];
+        document.getElementById('emapStreet').innerHTML = '<option value="">請選擇</option>' + streets.map(st => `<option value="${st}">${st}</option>`).join('');
+        renderEmapStores();
+        }
+
+        function renderEmapStores() {
+        const rawList = STORE_DATA[selectedShipping] || [];
+        const prefix = selectedShipping.includes('7-11') ? '7-11 ' : '全家 ';
+        const norm = s => s.toLowerCase().replace(/臺/g, '台');
+        let filtered = [];
+
+        if (currentEmapTab === 'street') {
+        const city = document.getElementById('emapCity').value;
+        const dist = document.getElementById('emapDist').value;
+        const street = document.getElementById('emapStreet').value;
+        if (!city) {
+        document.getElementById('storeListContainer').innerHTML = '<div class="text-center text-gray-400 py-24">請先由左側選擇「縣市」或切換上方「門市名稱／店號」查詢</div>';
+        return;
+        }
+        filtered = rawList.filter(s => s.city === city && (!dist || s.dist === dist) && (!street || s.street === street));
+        } else {
+        const kw = norm(document.getElementById('emapKeyword').value.trim());
+        filtered = !kw ? rawList : rawList.filter(s => norm(s.name).includes(kw) || s.code.includes(kw) || norm(s.addr).includes(kw));
+        }
+
+        const container = document.getElementById('storeListContainer');
+        if (filtered.length === 0) {
+        const kwRaw = document.getElementById('emapKeyword').value.trim();
+        container.innerHTML = `
+        <div class="text-center py-16 space-y-2 text-gray-500">
+        <div>查無符合條件的門市</div>
+        ${kwRaw ? `<button type="button" onclick="selectStoreItem('${prefix}${kwRaw.replace(/'/g, '')}門市', '自訂', '${selectedShipping}')" class="bg-[#008046] text-white font-bold px-3 py-1.5 rounded">直接使用「${kwRaw}」作為取件門市</button>` : ''}
+        </div>`;
+        return;
+        }
+
+        container.innerHTML = filtered.map(s => `
+        <div onclick="selectStoreItem('${prefix}${s.name}門市', '${s.code}', '${s.addr}')" class="bg-white hover:bg-[#edf7f2] border border-gray-200 hover:border-[#008046] rounded p-2.5 cursor-pointer flex items-center justify-between transition">
+        <div>
+        <div class="font-bold text-gray-800">${prefix}${s.name}門市 <span class="text-gray-400 font-normal">(店號：${s.code})</span></div>
+        <div class="text-[11px] text-gray-500 mt-0.5">${s.addr}</div>
+        </div>
+        <span class="bg-[#008046] text-white font-bold px-2.5 py-1 rounded text-[11px] whitespace-nowrap ml-2">選擇門市</span>
+        </div>`).join('');
+        }
+
+        function selectStoreItem(name, code, addr) {
+        const storeText = `${name} (店號 ${code}) - ${addr}`;
+        document.getElementById('custStore').value = storeText;
+        document.getElementById('selectedStoreName').innerText = `${name} (店號 ${code})`;
+        document.getElementById('selectedStoreAddr').innerText = addr;
+        document.getElementById('noStoreSelected').classList.add('hidden');
+        document.getElementById('storeSelectedCard').classList.remove('hidden');
+        closeStorePicker();
+        }
+
+        function updateMemberHeader() {
+        if (memberToken && currentUser) {
+        document.getElementById('headerMemberText').innerText = currentUser.name;
+        document.getElementById('sidebarMemberTitle').innerText = '嗨，' + currentUser.name;
+        document.getElementById('sidebarMemberSub').innerText = '點此查看我的訂單與會員資料';
+        } else {
+        document.getElementById('headerMemberText').innerText = '';
+        document.getElementById('sidebarMemberTitle').innerText = '會員頁面';
+        document.getElementById('sidebarMemberSub').innerText = '點此選擇登入或註冊';
+        }
+        }
+
+        function openMemberEntry() {
+        if (memberToken && currentUser) openMemberCenter();
+        else { pendingBuy = false; openAuthModal(''); }
+        }
+
+        function openAuthModal(noticeText = '') {
+        const notice = document.getElementById('authNotice');
+        notice.innerText = noticeText;
+        notice.classList.toggle('hidden', !noticeText);
+        document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function switchAuthTab(mode) {
+        const isLogin = mode === 'login';
+        document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+        document.getElementById('registerForm').classList.toggle('hidden', isLogin);
+        document.getElementById('tabLoginBtn').className = isLogin ? 'py-2 rounded-md bg-[#c8a45d] text-black' : 'py-2 rounded-md text-gray-400 hover:text-white';
+        document.getElementById('tabRegBtn').className = !isLogin ? 'py-2 rounded-md bg-[#c8a45d] text-black' : 'py-2 rounded-md text-gray-400 hover:text-white';
+        }
+
+        async function submitMemberLogin(e) {
+        e.preventDefault();
+        const res = await fetch('/api/member/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: document.getElementById('loginPhone').value, password: document.getElementById('loginPass').value })
+        });
+        const data = await res.json();
+        if (!res.ok) return alert(data.detail || '登入失敗');
+        onAuthSuccess(data);
+        }
+
+        async function submitMemberRegister(e) {
+        e.preventDefault();
+        const res = await fetch('/api/member/register', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+        name: document.getElementById('regName').value,
+        phone: document.getElementById('regPhone').value,
+        password: document.getElementById('regPass').value,
+        address: document.getElementById('regAddr').value
+        })
+        });
+        const data = await res.json();
+        if (!res.ok) return alert(data.detail || '註冊失敗');
+        alert('註冊成功！已自動為您登入。');
+        onAuthSuccess(data);
+        }
+
+        function onAuthSuccess(data) {
+        memberToken = data.token;
+        currentUser = data.user;
+        localStorage.setItem('memberToken', memberToken);
+        localStorage.setItem('memberUser', JSON.stringify(currentUser));
+        updateMemberHeader();
+        closeAuthModal();
+        if (pendingBuy) { pendingBuy = false; showCheckoutModal(); }
+        }
+
+        async function openMemberCenter() {
+        document.getElementById('memberProfileInfo').innerText = `手機：${currentUser.phone} ｜ 地址：${currentUser.address}`;
+        document.getElementById('memberCenterModal').classList.remove('hidden');
+        const res = await fetch('/api/member/orders', { headers: { 'X-Member-Token': memberToken } });
+        if (res.status === 401) return memberLogout();
+        const orders = await res.json();
+        document.getElementById('memberOrdersList').innerHTML = orders.length === 0
+        ? '<div class="text-center py-8 text-gray-500">目前尚無訂單紀錄</div>'
+        : orders.map(o => `
+        <div class="border border-white/10 rounded p-3 bg-[#070909] flex justify-between items-center">
+        <div>
+        <div class="font-bold text-[#f4f1ea]">訂單 #${o.id} ｜ <span class="text-[#e6c786]">NT$ ${o.total_amount}</span></div>
+        <div class="text-gray-400 mt-0.5">${o.items_summary}</div>
+        <div class="text-gray-500 mt-0.5">${o.address}</div>
+        </div>
+        <span class="px-2.5 py-1 rounded font-bold ${o.status.includes('已') ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30' : 'bg-amber-950 text-amber-400 border border-amber-500/30'}">${o.status}</span>
+        </div>`).join('');
+        }
+
+        function closeMemberCenter() { document.getElementById('memberCenterModal').classList.add('hidden'); }
+
+        function memberLogout() {
+        memberToken = ''; currentUser = null;
+        localStorage.removeItem('memberToken'); localStorage.removeItem('memberUser');
+        updateMemberHeader(); closeMemberCenter();
+        alert('已登出會員！');
+        }
+
+        function handleBuyClick() {
+        toggleCart(false);
+        if (!memberToken || !currentUser) {
+        pendingBuy = true;
+        openAuthModal('需先登入或註冊會員，方可結帳購買！');
+        return;
+        }
+        showCheckoutModal();
+        }
+
+        function showCheckoutModal() {
+        document.getElementById('custName').value = currentUser.name;
+        document.getElementById('custPhone').value = currentUser.phone;
+        document.getElementById('custAddr').value = currentUser.address;
+        document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckout() { document.getElementById('checkoutModal').classList.add('hidden'); }
+
+        async function submitOrder(e) {
+        e.preventDefault();
+        const isHome = selectedShipping === '宅配到府';
+        const destination = isHome ? document.getElementById('custAddr').value.trim() : document.getElementById('custStore').value.trim();
+        if (!destination) return alert(isHome ? '請輸入宅配完整地址' : '請先選取超商取貨門市！');
+
+        const payload = {
+        customer_name: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        address: isHome ? destination : `[${selectedShipping}] ${destination}`,
+        shipping_method: selectedShipping,
+        shipping_store: isHome ? '' : destination,
+        payment_method: selectedPayment,
+        items: cart.map(i => ({ product_id: i.id, quantity: i.quantity, size: i.size }))
+        };
+
+        try {
+        const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Member-Token': memberToken },
+        body: JSON.stringify(payload)
+        });
+        if (res.status === 401) {
+        closeCheckout(); memberLogout(); pendingBuy = true;
+        return openAuthModal('請重新登入或註冊後繼續結帳！');
+        }
+        const data = await res.json();
+        if (!res.ok) return alert(data.detail || '下單失敗');
+
+        if (selectedPayment !== '貨到付款') {
+        cart = []; updateCartUI(); closeCheckout();
+        window.location.href = `/api/ecpay/checkout/${data.order_id}`;
+        return;
+        }
+
+        alert(`🎉 訂單建立成功！\n訂單編號：#${data.order_id}\n取貨門市/地址：${destination}\n付款方式：${selectedPayment}\n總金額：NT$ ${data.total_amount}`);
+        cart = []; updateCartUI(); closeCheckout(); loadProducts(currentCategory);
+        } catch (err) {
+        alert('下單失敗：' + err.message);
+        }
+        }
+
+        updateMemberHeader();
+        loadProducts();
+    </script>
+</body>
+</html>
